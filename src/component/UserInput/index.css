@@ -1,0 +1,40 @@
+.Header {
+  display: flex;
+  margin-left: 15%;
+}
+.Header p {
+  /* margin-top: 50px; */
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.Header .Logo {
+  width: 70px;
+  height: 70px;
+  /* margin-top: 50px; */
+  margin-right: 20px;
+  /* vertical-align: middle; */
+}
+
+.container {
+  background-image: url(./backgroundImage.png);
+  background-repeat: no-repeat;
+}
+.Card {
+  margin-left: 15%;
+  margin-bottom: 10px;
+  width: 50%;
+  border: 5px #ff8000 solid;
+  border-radius: 10px;
+  background: rgb(255, 174, 87, 0.3);
+}
+
+input {
+  width: 50%;
+  background-color: rgb(255, 174, 87, 0.3);
+  text-align: center;
+}
+
+.Submit {
+  margin-left: 25%;
+}
