@@ -8,7 +8,7 @@ function App() {
     <Router>
       <Switch>
         <Route path="/UserInput:user?/:id?" component={UserInput} />
-        <Route path="/" component={Scan} />
+        <Route path="/" component={UserInput} />
       </Switch>
     </Router>
   );
