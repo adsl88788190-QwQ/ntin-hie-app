@@ -32,7 +32,7 @@ const Scan = () => {
         disabled={!scanReady}
         onClick={() => {
           const { user, id } = userInfo;
-          history.push(`/UserInput?user=${user}&id=${id}`);
+          history.push(`/Menu?user=${user}&id=${id}`);
         }}
       >
         確認身份

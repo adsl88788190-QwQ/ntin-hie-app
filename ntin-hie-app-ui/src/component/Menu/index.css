@@ -26,4 +26,17 @@
 .menu_container {
   background-image: url(./backround.png);
   background-repeat: no-repeat;
+  height: 100vh;
+}
+
+.UserInfo {
+  margin: 10px 5vh;
+  width: 50%;
+  border: 2px #8dc7f0 solid;
+  border-radius: 10px;
+  background: rgb(255, 255, 255, 1);
+}
+
+.MenuHeader {
+  display: flex;
 }
