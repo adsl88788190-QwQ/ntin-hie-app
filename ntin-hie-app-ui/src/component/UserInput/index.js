@@ -44,7 +44,7 @@ const InputUI = () => {
   const [user, id] = [useQuery().get("user"), useQuery().get("id")];
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Container maxWidth="sm" className="container">
         <div className="Header">
           <img className="Logo" src={water} />
@@ -91,7 +91,7 @@ const InputUI = () => {
           </ColorButton>
         </div>
       </Container>
-    </React.Fragment>
+    </Fragment>
   );
 };
 

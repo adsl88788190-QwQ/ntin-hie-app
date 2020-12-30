@@ -1,0 +1,29 @@
+.InputField {
+  margin-bottom: 10px;
+  border: 2px #8dc7f0 solid;
+  border-radius: 10px;
+  background: rgb(255, 174, 87, 0);
+  text-align: center;
+}
+
+.InputField p {
+  margin-top: 5px;
+}
+
+.InputField img {
+  margin-top: 5px;
+}
+
+.FirstIcon {
+  float: left;
+  margin-left: 5%;
+  margin-right: 15%;
+}
+.IO {
+  font-size: 24px;
+}
+
+.menu_container {
+  background-image: url(./backround.png);
+  background-repeat: no-repeat;
+}
