@@ -6,7 +6,7 @@
   },
   "scripts": {
     "start": "node server",
-    "build": "npm install & (cd ntin-hie-app-ui/ && yarn install && yarn build)"
+    "build": "yarn install & (cd ntin-hie-app-ui/ && yarn install && yarn build)"
   },
   "cacheDirectories": [
     "node_modules",
