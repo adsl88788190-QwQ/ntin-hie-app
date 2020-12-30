@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { Fragment, useState } from "react";
 import water from "./water.png";
 
@@ -9,16 +10,7 @@ import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-  useParams,
-  useRouteMatch,
-  useLocation,
-} from "react-router-dom";
+import { useLocation } from "react-router-dom";
 const ColorButton = withStyles((theme) => ({
   root: {
     // margin: "0 auto",
@@ -33,15 +25,15 @@ const ColorButton = withStyles((theme) => ({
 }))(Button);
 
 const useQuery = () => {
-  console.log(useLocation());
   return new URLSearchParams(useLocation().search);
 };
 const InputUI = () => {
   const [item, setItem] = useState("");
   const [grams, setGrams] = useState("");
-  const [selectedDate, handleDateChange] = useState(new Date());
+  const [selectedDate, handleDateChange] = useState(
+    moment().format("YYYY-MM-DD[T]h:mm")
+  );
   const [user, id] = [useQuery().get("user"), useQuery().get("id")];
-
   return (
     <Fragment>
       <Container maxWidth="sm" className="container">
@@ -60,7 +52,8 @@ const InputUI = () => {
             id="datetime-local"
             label="日期與時間"
             type="datetime-local"
-            defaultValue="2020-12-24T10:30"
+            defaultValue={selectedDate}
+            onChange={(e) => handleDateChange(e.target.value)}
           />
         </div>
         <div className="Card">

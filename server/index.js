@@ -1,7 +1,10 @@
 const express = require("express");
 const path = require("path");
+const bodyParser = require("body-parser");
+
 const cluster = require("cluster");
 const numCPUs = require("os").cpus().length;
+const fs = require("fs");
 
 const isDev = process.env.NODE_ENV !== "production";
 const PORT = process.env.PORT || 5000;
@@ -22,7 +25,13 @@ if (!isDev && cluster.isMaster) {
   });
 } else {
   const app = express();
-
+  app.use(bodyParser.json()); // to support JSON-encoded bodies
+  app.use(
+    bodyParser.urlencoded({
+      // to support URL-encoded bodies
+      extended: true,
+    })
+  );
   // Priority serve any static files.
   app.use(express.static(path.resolve(__dirname, "../ntin-hie-app-ui/build")));
 
@@ -38,7 +47,13 @@ if (!isDev && cluster.isMaster) {
       path.resolve(__dirname, "../react-ui/build", "index.html")
     );
   });
-
+  //Recive the user info
+  app.post("/userData", (req, res) => {
+    console.log("Got body:", req.body);
+    writeUserInfo(req.body);
+    // console.log("Got body:", req.body);
+    res.sendStatus(200);
+  });
   app.listen(PORT, function () {
     console.error(
       `Node ${
@@ -46,4 +61,32 @@ if (!isDev && cluster.isMaster) {
       }: listening on port ${PORT}`
     );
   });
+}
+
+function writeUserInfo({ id, date, item, number }) {
+  const path = `${id}.json`;
+  const [yyyymmdd, hhmm] = date.split("T");
+  try {
+    let data = {};
+    if (fs.existsSync(path)) {
+      console.log("exist");
+      const file = fs.readFileSync(path);
+      data = JSON.parse(file);
+      data[yyyymmdd] = data[yyyymmdd] || {};
+      data[yyyymmdd][hhmm] = data[yyyymmdd][hhmm] || [];
+      data[yyyymmdd][hhmm].push({ [item]: number });
+    } else {
+      data = {
+        [yyyymmdd]: {
+          [hhmm]: [{ [item]: number }],
+        },
+      };
+    }
+    fs.writeFile(path, JSON.stringify(data), function (err) {
+      if (err) console.log(err);
+      else console.log("Write operation complete.");
+    });
+  } catch (err) {
+    console.error(err);
+  }
 }

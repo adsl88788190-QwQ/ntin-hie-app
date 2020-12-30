@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { Fragment, useState } from "react";
 import water from "./water.png";
 
@@ -28,9 +29,10 @@ const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 };
 const InputUI = () => {
-  const [item, setItem] = useState("");
   const [grams, setGrams] = useState("");
-  const [selectedDate, handleDateChange] = useState(new Date());
+  const [selectedDate, handleDateChange] = useState(
+    moment().format("YYYY-MM-DD[T]h:mm")
+  );
   const [user, id] = [useQuery().get("user"), useQuery().get("id")];
 
   return (
@@ -51,7 +53,8 @@ const InputUI = () => {
             id="datetime-local"
             label="日期與時間"
             type="datetime-local"
-            defaultValue="2020-12-24T10:30"
+            defaultValue={selectedDate}
+            onChange={(e) => handleDateChange(e.target.value)}
           />
         </div>
 
