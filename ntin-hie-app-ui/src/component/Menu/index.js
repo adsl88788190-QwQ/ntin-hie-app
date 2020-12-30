@@ -55,16 +55,35 @@ const Menu = () => {
             src={water}
             text="輸入飲水"
             onClick={() => {
-              history.push(`/UserInput?user=${user}&id=${id}`);
+              history.push(`/WaterInput?user=${user}&id=${id}`);
             }}
           />
-          <LogoAndText src={food} text="輸入飲食" />
+          <LogoAndText
+            src={food}
+            text="輸入飲食"
+            onClick={() => {
+              history.push(`/FoodInput?user=${user}&id=${id}`);
+            }}
+          />
         </div>
 
         <p className="IO">攝出</p>
         <div className="InputField">
-          <LogoAndText className="FirstIcon" src={pee} text="輸入排尿" />
-          <LogoAndText src={pee} text="輸入排泄" />
+          <LogoAndText
+            className="FirstIcon"
+            src={pee}
+            text="輸入排尿"
+            onClick={() => {
+              history.push(`/PeeOutput?user=${user}&id=${id}`);
+            }}
+          />
+          <LogoAndText
+            src={pee}
+            text="輸入排泄"
+            onClick={() => {
+              history.push(`/ShitOutput?user=${user}&id=${id}`);
+            }}
+          />
         </div>
         <div>
           <ColorButton variant="contained" color="primary" onClick={() => {}}>
