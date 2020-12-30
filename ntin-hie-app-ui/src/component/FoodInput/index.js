@@ -13,7 +13,6 @@ import { useLocation } from "react-router-dom";
 const ColorButton = withStyles((theme) => ({
   root: {
     // margin: "0 auto",
-    width: "25%",
     fontSize: 18,
     "font-weight": "bold",
     color: "#000000",
