@@ -11,6 +11,7 @@ import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 const ColorButton = withStyles((theme) => ({
   root: {
     // margin: "0 auto",
@@ -27,13 +28,33 @@ const ColorButton = withStyles((theme) => ({
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 };
+
 const InputUI = () => {
   const [item, setItem] = useState("");
   const [grams, setGrams] = useState("");
   const [selectedDate, handleDateChange] = useState(
-    moment().format("YYYY-MM-DD[T]h:mm")
+    moment().format("YYYY-MM-DD[T]hh:mm")
   );
   const [user, id] = [useQuery().get("user"), useQuery().get("id")];
+  const history = useHistory();
+  const sendRequest = () => {
+    fetch("/userData", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id,
+        date: selectedDate,
+        item,
+        number: grams,
+      }),
+    }).then(() => {
+      history.push(`/Menu?user=${user}&id=${id}`);
+    });
+  };
+
   return (
     <Fragment>
       <Container maxWidth="sm" className="container">
@@ -78,7 +99,7 @@ const InputUI = () => {
         </div>
 
         <div className="Submit">
-          <ColorButton size="large" variant="contained">
+          <ColorButton size="large" variant="contained" onClick={sendRequest}>
             輸入
           </ColorButton>
         </div>

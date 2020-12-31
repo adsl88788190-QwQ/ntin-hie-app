@@ -1,7 +1,7 @@
 import moment from "moment";
 import React, { Fragment, useState } from "react";
 import water from "./water.png";
-
+import { useHistory } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 
@@ -35,7 +35,24 @@ const InputUI = () => {
     moment().format("YYYY-MM-DD[T]h:mm")
   );
   const [user, id] = [useQuery().get("user"), useQuery().get("id")];
-
+  const history = useHistory();
+  const sendRequest = () => {
+    fetch("/userData", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id,
+        date: selectedDate,
+        item,
+        number: grams,
+      }),
+    }).then(() => {
+      history.push(`/Menu?user=${user}&id=${id}`);
+    });
+  };
   return (
     <Fragment>
       <Container maxWidth="sm" className="container">
@@ -80,7 +97,7 @@ const InputUI = () => {
         </div>
 
         <div className="Submit">
-          <ColorButton size="large" variant="contained">
+          <ColorButton size="large" variant="contained" onClick={sendRequest}>
             輸入
           </ColorButton>
         </div>
