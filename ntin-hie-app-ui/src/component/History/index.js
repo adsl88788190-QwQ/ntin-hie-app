@@ -14,7 +14,6 @@ const WidthButton = withStyles((theme) => ({
 
 const History = () => {
   const useQuery = () => {
-    console.log(useLocation());
     return new URLSearchParams(useLocation().search);
   };
   const history = useHistory();
@@ -39,11 +38,10 @@ const History = () => {
   const UserHistory = () => {
     const list = [];
     for (let date in userData) {
-      console.log(date);
       //   for (let time in userData[date]) {
       list.push(
         <div key={date}>
-          <WidthButton>
+          <WidthButton onClick={() => openDetailPage(userData[date])}>
             <div className="UserInfo">
               <p>日期: {date}</p>
               {/* <p>時間: {time}</p> */}
@@ -56,6 +54,12 @@ const History = () => {
     // return <div></div>;
     return <div className="UserHistory">{list}</div>;
   };
+
+  const openDetailPage = (data) => {
+    // console.log(data);
+    history.push(`/DetailPage?user=${user}&id=${id}`, data);
+  };
+
   return (
     <Container maxWidth="sm" className="menu_container">
       <div className="MenuHeader">
