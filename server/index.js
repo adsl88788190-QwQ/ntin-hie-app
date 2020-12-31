@@ -40,13 +40,6 @@ if (!isDev && cluster.isMaster) {
     res.set("Content-Type", "application/json");
     res.send('{"message":"Hello from the custom server!"}');
   });
-
-  // All remaining requests return the React app, so it can handle routing.
-  app.get("*", function (request, response) {
-    response.sendFile(
-      path.resolve(__dirname, "../react-ui/build", "index.html")
-    );
-  });
   //Recive the user info
   app.post("/userData", (req, res) => {
     console.log("Got body:", req.body);
@@ -54,6 +47,32 @@ if (!isDev && cluster.isMaster) {
     // console.log("Got body:", req.body);
     res.sendStatus(200);
   });
+  //Get User Data
+  app.get("/userData", (req, res) => {
+    const { id } = req.query;
+    const path = `${id}.json`;
+    let data = {};
+
+    // console.log(id);
+    try {
+      if (fs.existsSync(path)) {
+        const file = fs.readFileSync(path);
+        data = JSON.parse(file);
+      }
+      res.send(data);
+    } catch (err) {
+      console.error(err);
+      res.send({});
+    }
+  });
+
+  // All remaining requests return the React app, so it can handle routing.
+  app.get("*", function (request, response) {
+    response.sendFile(
+      path.resolve(__dirname, "../react-ui/build", "index.html")
+    );
+  });
+
   app.listen(PORT, function () {
     console.error(
       `Node ${
