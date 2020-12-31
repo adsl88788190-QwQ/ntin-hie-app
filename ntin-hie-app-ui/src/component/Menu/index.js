@@ -86,7 +86,13 @@ const Menu = () => {
           />
         </div>
         <div>
-          <ColorButton variant="contained" color="primary" onClick={() => {}}>
+          <ColorButton
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              history.push(`/History?user=${user}&id=${id}`);
+            }}
+          >
             歷史紀錄
           </ColorButton>
         </div>
