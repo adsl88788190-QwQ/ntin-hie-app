@@ -31,6 +31,15 @@ const Menu = () => {
   };
   const history = useHistory();
   const [user, id] = [useQuery().get("user"), useQuery().get("id")];
+
+  const [userWeight, setUserWeight] = useState(
+    localStorage.getItem("userWeight") || ""
+  );
+  const updateWeight = (event) => {
+    localStorage.setItem("userWeight", event.target.value);
+    setUserWeight(event.target.value);
+  };
+
   return (
     <Fragment>
       <Container maxWidth="sm" className="menu_container">
@@ -43,8 +52,9 @@ const Menu = () => {
             id="item"
             label="體重："
             margin="dense"
-            //   value={item}
-            //   onChange={(e) => setItem(e.target.value)}
+            type="number"
+            value={userWeight}
+            onChange={updateWeight}
           />
         </div>
 

@@ -32,7 +32,7 @@ const InputUI = () => {
   const [item, setItem] = useState("");
   const [grams, setGrams] = useState("");
   const [selectedDate, handleDateChange] = useState(
-    moment().format("YYYY-MM-DD[T]h:mm")
+    moment().format("YYYY-MM-DD[T]hh:mm")
   );
   const [user, id] = [useQuery().get("user"), useQuery().get("id")];
   const history = useHistory();
