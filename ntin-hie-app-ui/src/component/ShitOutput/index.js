@@ -35,7 +35,18 @@ const InputUI = () => {
   );
   const [user, id] = [useQuery().get("user"), useQuery().get("id")];
   const history = useHistory();
+
+  const InputReady = () => {
+    if (grams == "") {
+      alert("毫升沒有填");
+      return false;
+    }
+    return true;
+  };
   const sendRequest = () => {
+    if (!InputReady) {
+      return;
+    }
     fetch("/userData", {
       method: "POST",
       headers: {
