@@ -56,8 +56,8 @@ const InputUI = () => {
       body: JSON.stringify({
         id,
         date: selectedDate,
-        item: "體重",
-        number: parseInt(grams),
+        item: "排尿",
+        number: parseInt(grams) * -1,
       }),
     }).then(() => {
       history.push(`/Menu?user=${user}&id=${id}`);
