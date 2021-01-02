@@ -68,7 +68,7 @@ const InputUI = () => {
       <Container maxWidth="sm" className="container">
         <div className="Header">
           <img className="Logo" src={pee} />
-          <p>輸入體重</p>
+          <p>輸入排尿</p>
         </div>
 
         <div className="Card">
