@@ -66,6 +66,29 @@ if (!isDev && cluster.isMaster) {
     }
   });
 
+  //Recive the user weight
+  app.post("/userWeight", (req, res) => {
+    console.log("Got body:", req.body);
+    writeUserWeight(req.body);
+    res.sendStatus(200);
+  });
+  //Get the user weight
+  app.get("/userWeight", (req, res) => {
+    const { id } = req.query;
+    const path = `${id}Weight.json`;
+    let data = {};
+    try {
+      if (fs.existsSync(path)) {
+        const file = fs.readFileSync(path);
+        data = JSON.parse(file);
+      }
+      res.send(data);
+    } catch (err) {
+      console.error(err);
+      res.send({});
+    }
+  });
+
   // All remaining requests return the React app, so it can handle routing.
   app.get("*", function (request, response) {
     response.sendFile(
@@ -101,6 +124,27 @@ function writeUserInfo({ id, date, item, number }) {
         },
       };
     }
+    fs.writeFile(path, JSON.stringify(data), function (err) {
+      if (err) console.log(err);
+      else console.log("Write operation complete.");
+    });
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+function writeUserWeight({ id, date, weight }) {
+  const path = `${id}Weight.json`;
+  const yyyymmdd = date.split("T")[0];
+
+  try {
+    let data = {};
+    if (fs.existsSync(path)) {
+      console.log("exist");
+      const file = fs.readFileSync(path);
+      data = JSON.parse(file);
+    }
+    data[yyyymmdd] = weight;
     fs.writeFile(path, JSON.stringify(data), function (err) {
       if (err) console.log(err);
       else console.log("Write operation complete.");

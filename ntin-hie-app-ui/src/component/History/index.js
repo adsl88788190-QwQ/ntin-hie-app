@@ -19,10 +19,15 @@ const History = () => {
   const history = useHistory();
   const [user, id] = [useQuery().get("user"), useQuery().get("id")];
   const [userData, setUserData] = useState({});
+  const [userWeight, setUserWeight] = useState({});
   useEffect(async () => {
     const response = await fetch(`/userData?id=${id}`);
     const result = await response.json();
     setUserData(result);
+
+    const weightresp = await fetch(`/userWeight?id=${id}`);
+    const weightResult = await weightresp.json();
+    setUserWeight(weightResult);
   }, []);
 
   const getDate = () => {
@@ -40,6 +45,7 @@ const History = () => {
     for (let date in userData) {
       //   for (let time in userData[date]) {
       const { userInput, userOutput, userTotal } = getUserIO(userData[date]);
+
       list.push(
         <div key={date}>
           <WidthButton onClick={() => openDetailPage(userData[date])}>
@@ -48,6 +54,9 @@ const History = () => {
               <p>使用者當日輸入: {userInput} (單位:克)</p>
               <p>使用者當日輸出: {Math.abs(userOutput)}(單位:毫升)</p>
               <p>使用者當日計算: {userTotal} (單位:克,毫升)</p>
+              <p>
+                使用者當日體重:{userWeight[date] || "當日無輸入"} (單位:公斤)
+              </p>
             </div>
           </WidthButton>
         </div>

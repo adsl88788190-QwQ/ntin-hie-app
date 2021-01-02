@@ -6,6 +6,7 @@ import PeeOutput from "./component/PeeOutput";
 import ShitOutput from "./component/ShitOutput";
 import History from "./component/History";
 import DetailPage from "./component/DetailPage";
+import UserWeight from "./component/UserWeight";
 import Scan from "./component/Scan";
 import Menu from "./component/Menu";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
@@ -13,6 +14,7 @@ function App() {
   return (
     <Router>
       <Switch>
+        <Route path="/UserWeight:user?/:id?" component={UserWeight} />
         <Route path="/DetailPage:user?/:id?" component={DetailPage} />
         <Route path="/History:user?/:id?" component={History} />
         <Route path="/ShitOutput:user?/:id?" component={ShitOutput} />

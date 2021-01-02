@@ -1,7 +1,6 @@
 import moment from "moment";
 import React, { Fragment, useState } from "react";
-import water from "./water.png";
-import pee from "./pee.png";
+import userWeight from "./userWeight.png";
 import { useHistory } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
@@ -36,9 +35,10 @@ const InputUI = () => {
   );
   const [user, id] = [useQuery().get("user"), useQuery().get("id")];
   const history = useHistory();
+
   const InputReady = () => {
     if (grams == "") {
-      alert("毫升沒有填");
+      alert("體重沒有填");
       return false;
     }
     return true;
@@ -47,7 +47,7 @@ const InputUI = () => {
     if (!InputReady) {
       return;
     }
-    fetch("/userData", {
+    fetch("/userWeight", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -57,7 +57,7 @@ const InputUI = () => {
         id,
         date: selectedDate,
         item: "體重",
-        number: parseInt(grams),
+        weight: parseInt(grams),
       }),
     }).then(() => {
       history.push(`/Menu?user=${user}&id=${id}`);
@@ -67,7 +67,7 @@ const InputUI = () => {
     <Fragment>
       <Container maxWidth="sm" className="container">
         <div className="Header">
-          <img className="Logo" src={pee} />
+          <img className="Logo" src={userWeight} />
           <p>輸入體重</p>
         </div>
 
@@ -93,7 +93,7 @@ const InputUI = () => {
             margin="dense"
             value={grams}
             onChange={(e) => setGrams(e.target.value)}
-            endAdornment={<InputAdornment position="end">毫升</InputAdornment>}
+            endAdornment={<InputAdornment position="end">公斤</InputAdornment>}
           />
         </div>
 

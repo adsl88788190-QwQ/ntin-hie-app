@@ -5,6 +5,7 @@ import water from "./water.png";
 import food from "./food.png";
 import pee from "./pee.png";
 import shit from "./shit.png";
+import userWeightPic from "./userWeight.png";
 import Button from "@material-ui/core/Button";
 import "./index.css";
 import { withStyles } from "@material-ui/core/styles";
@@ -48,13 +49,12 @@ const Menu = () => {
             <p>姓名 {user}</p>
             <p>病例號: {id}</p>
           </div>
-          <TextField
-            id="item"
-            label="體重："
-            margin="dense"
-            type="number"
-            value={userWeight}
-            onChange={updateWeight}
+          <LogoAndText
+            src={userWeightPic}
+            text="輸入體重"
+            onClick={() => {
+              history.push(`/UserWeight?user=${user}&id=${id}`);
+            }}
           />
         </div>
 
