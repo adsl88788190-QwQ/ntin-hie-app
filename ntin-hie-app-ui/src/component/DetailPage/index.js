@@ -14,15 +14,17 @@ const DetailPage = () => {
     const list = [];
     let detailData = useLocation().state;
     for (let time in detailData) {
-      console.log(detailData[time]);
       for (let item of detailData[time]) {
-        //   console.log(item);
         const itemValue = Object.keys(item)[0];
-        const weidhtValue = item[itemValue];
+        const weidhtValue = Math.abs(item[itemValue]);
+        const displayWord = item[itemValue] >= 0 ? "克" : "毫升";
         list.push(
           <div className="UserInfo">
             <p>項目: {itemValue}</p>
-            <p>重量:{weidhtValue}</p>
+            <p>
+              重量:{weidhtValue}
+              {displayWord}
+            </p>
           </div>
         );
       }

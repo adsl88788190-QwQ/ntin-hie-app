@@ -39,12 +39,15 @@ const History = () => {
     const list = [];
     for (let date in userData) {
       //   for (let time in userData[date]) {
+      const { userInput, userOutput, userTotal } = getUserIO(userData[date]);
       list.push(
         <div key={date}>
           <WidthButton onClick={() => openDetailPage(userData[date])}>
             <div className="UserInfo">
               <p>日期: {date}</p>
-              {/* <p>時間: {time}</p> */}
+              <p>使用者當日輸入: {userInput} (單位:克)</p>
+              <p>使用者當日輸出: {Math.abs(userOutput)}(單位:毫升)</p>
+              <p>使用者當日計算: {userTotal} (單位:克,毫升)</p>
             </div>
           </WidthButton>
         </div>
@@ -55,6 +58,29 @@ const History = () => {
     return <div className="UserHistory">{list}</div>;
   };
 
+  const getUserIO = (data) => {
+    let userInput = 0;
+    let userOutput = 0;
+    let userTotal = 0;
+    for (let time in data) {
+      for (let item of data[time]) {
+        //   console.log(item);
+        const itemValue = Object.keys(item)[0];
+        const weidhtValue = item[itemValue];
+        if (weidhtValue >= 0) {
+          userInput += weidhtValue;
+        } else {
+          userOutput += weidhtValue;
+        }
+      }
+    }
+    userTotal = userInput + userOutput;
+    return {
+      userInput,
+      userOutput,
+      userTotal,
+    };
+  };
   const openDetailPage = (data) => {
     // console.log(data);
     history.push(`/DetailPage?user=${user}&id=${id}`, data);

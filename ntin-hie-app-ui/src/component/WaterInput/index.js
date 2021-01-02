@@ -62,7 +62,7 @@ const InputUI = () => {
         id,
         date: selectedDate,
         item,
-        number: grams,
+        number: parseInt(grams),
       }),
     }).then(() => {
       history.push(`/Menu?user=${user}&id=${id}`);
