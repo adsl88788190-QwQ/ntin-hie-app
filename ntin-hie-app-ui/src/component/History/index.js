@@ -51,8 +51,8 @@ const History = () => {
           <WidthButton onClick={() => openDetailPage(userData[date])}>
             <div className="UserInfo">
               <p>日期: {date}</p>
-              <p>使用者當日輸入: + {userInput} (單位:克)</p>
-              <p>使用者當日輸出: - {Math.abs(userOutput)}(單位:毫升)</p>
+              <p>使用者當日輸入: + {userInput} (單位:克,毫升)</p>
+              <p>使用者當日輸出: - {Math.abs(userOutput)}(單位:克,毫升)</p>
               <p>
                 使用者當日計算: {userTotal >= 0 ? "+" : ""}
                 {userTotal} (單位:克,毫升)

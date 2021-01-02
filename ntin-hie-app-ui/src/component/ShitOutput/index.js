@@ -94,7 +94,7 @@ const InputUI = () => {
             margin="dense"
             value={grams}
             onChange={(e) => setGrams(e.target.value)}
-            endAdornment={<InputAdornment position="end">毫升</InputAdornment>}
+            endAdornment={<InputAdornment position="end">克</InputAdornment>}
           />
         </div>
 
