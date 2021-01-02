@@ -18,11 +18,13 @@ const DetailPage = () => {
         const itemValue = Object.keys(item)[0];
         const weidhtValue = Math.abs(item[itemValue]);
         const displayWord = item[itemValue] >= 0 ? "克" : "毫升";
+        const displayIcon = item[itemValue] >= 0 ? "+" : "-";
         list.push(
           <div className="UserInfo">
             <p>項目: {itemValue}</p>
             <p>
-              重量:{weidhtValue}
+              重量: {displayIcon}
+              {weidhtValue}
               {displayWord}
             </p>
           </div>
