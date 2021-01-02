@@ -88,7 +88,7 @@ const Menu = () => {
             }}
           />
           <LogoAndText
-            src={pee}
+            src={shit}
             text="輸入排泄"
             onClick={() => {
               history.push(`/ShitOutput?user=${user}&id=${id}`);

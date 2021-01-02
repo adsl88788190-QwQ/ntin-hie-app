@@ -1,6 +1,7 @@
 import moment from "moment";
 import React, { Fragment, useState } from "react";
 import water from "./water.png";
+import shit from "./shit.png";
 import { useHistory } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
@@ -67,7 +68,7 @@ const InputUI = () => {
     <Fragment>
       <Container maxWidth="sm" className="container">
         <div className="Header">
-          <img className="Logo" src={water} />
+          <img className="Logo" src={shit} />
           <p>輸入排泄</p>
         </div>
 
