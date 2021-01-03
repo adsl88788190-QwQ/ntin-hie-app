@@ -21,6 +21,7 @@ const DetailPage = () => {
         const displayIcon = item[itemValue] >= 0 ? "+" : "-";
         list.push(
           <div className="UserInfo">
+            <p>時間: {time}</p>
             <p>項目: {itemValue}</p>
             <p>
               重量: {displayIcon}
