@@ -11,6 +11,7 @@ const Scan = () => {
   return (
     <>
       <BarcodeScannerComponent
+        height={500}
         onUpdate={(err, result) => {
           const id = result && result.text;
           const user = userData[id] || "";

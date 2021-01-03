@@ -72,7 +72,9 @@ const History = () => {
 
   const UserHistory = () => {
     const list = [];
-    for (let date in userData) {
+    const sortDate = Object.keys(userData).sort();
+    for (let index = sortDate.length - 1; index >= 0; index--) {
+      const date = sortDate[index];
       const { userInput, userOutput, userTotal } = getUserIO(userData[date]);
 
       list.push(
