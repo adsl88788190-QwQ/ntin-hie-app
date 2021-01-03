@@ -66,6 +66,9 @@ const useStyles = makeStyles({
     "margin-bottom": "5px",
     "font-size": "20px",
   },
+  imgClass: {
+    width: "70%",
+  },
 });
 
 const Menu = () => {
@@ -86,6 +89,7 @@ const Menu = () => {
           </div>
           <LogoAndText
             src={userWeightPic}
+            imgClass={classes.imgClass}
             text="輸入體重"
             onClick={() => {
               history.push(`/UserWeight?user=${user}&id=${id}`);
@@ -147,12 +151,12 @@ const Menu = () => {
 };
 
 const LogoAndText = (props) => {
-  const { src, text, onClick } = props;
+  const { src, text, onClick, imgClass } = props;
   const classes = useStyles();
   return (
     <Button onClick={onClick}>
       <div>
-        <img src={src} alt="img" />
+        <img className={imgClass} src={src} alt="img" />
         <p className={classes.logoWord}>{text}</p>
       </div>
     </Button>
