@@ -1,5 +1,3 @@
-import "./App.css";
-import React, { Fragment, useState } from "react";
 import WaterInput from "./component/WaterInput";
 import FoodInput from "./component/FoodInput";
 import PeeOutput from "./component/PeeOutput";
@@ -9,7 +7,7 @@ import DetailPage from "./component/DetailPage";
 import UserWeight from "./component/UserWeight";
 import Scan from "./component/Scan";
 import Menu from "./component/Menu";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 function App() {
   return (
     <Router>

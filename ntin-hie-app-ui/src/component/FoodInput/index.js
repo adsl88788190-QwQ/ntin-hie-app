@@ -1,13 +1,12 @@
 import moment from "moment";
 import React, { Fragment, useState } from "react";
-import water from "./water.png";
 import food from "./food.png";
+import background from "./background.png";
 import { useHistory } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 
-import "./index.css";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -25,8 +24,53 @@ const ColorButton = withStyles((theme) => ({
   },
 }))(Button);
 
+const useStyles = makeStyles({
+  background: {
+    backgroundImage: `url(${background})`,
+    "background-repeat": "no-repeat",
+    "background-size": "cover",
+    height: "100vh",
+    "padding-top": "20px",
+  },
+  InputHeader: {
+    display: "flex",
+    "justify-content": "center",
+    "font-size": "42px",
+  },
+  InputLogo: {
+    width: "120px",
+    height: "110px",
+  },
+  InputWord: {
+    "margin-top": "30px",
+    "margin-left": "10px",
+  },
+  Card: {
+    border: "5px hsl(30, 100%, 50%) solid",
+    "border-radius": "10px",
+    background: "rgb(255, 174, 87, 0.3)",
+    "font-size": "24px",
+    width: "90%",
+    paddingLeft: "5%",
+    paddingRight: "5%",
+  },
+  CardWrap: {
+    display: "flex",
+    "justify-content": "center",
+    marginTop: 20,
+  },
+  PaddingField: {
+    display: "flex",
+    justifyContent: "center",
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
+  InputField: {
+    width: "90%",
+  },
+});
+
 const useQuery = () => {
-  console.log(useLocation());
   return new URLSearchParams(useLocation().search);
 };
 const InputUI = () => {
@@ -39,11 +83,11 @@ const InputUI = () => {
   const history = useHistory();
 
   const InputReady = () => {
-    if (item == "") {
+    if (item === "") {
       alert("品項沒有填");
       return false;
     }
-    if (grams == "") {
+    if (grams === "") {
       alert("重量沒有填");
       return false;
     }
@@ -70,50 +114,66 @@ const InputUI = () => {
       history.push(`/Menu?user=${user}&id=${id}`);
     });
   };
+
+  const classes = useStyles();
   return (
     <Fragment>
-      <Container maxWidth="sm" className="container">
-        <div className="Header">
-          <img className="Logo" src={food} />
-          <p>輸入飲食</p>
+      <Container maxWidth="sm" className={classes.background}>
+        <div className={classes.InputHeader}>
+          <img className={classes.InputLogo} src={food} alt="food" />
+          <p className={classes.InputWord}>輸入飲食</p>
         </div>
 
-        <div className="Card">
-          <p>姓名 {user}</p>
-          <p>病例號: {id}</p>
+        <div className={classes.CardWrap}>
+          <div className={classes.Card}>
+            <p> 姓名 :{user}</p>
+            <p> 病例號: {id}</p>
+          </div>
         </div>
 
-        <div className="Card">
-          <TextField
-            id="datetime-local"
-            label="日期與時間"
-            type="datetime-local"
-            defaultValue={selectedDate}
-            onChange={(e) => handleDateChange(e.target.value)}
-          />
-        </div>
-        <div className="Card">
-          <TextField
-            id="item"
-            label="品項："
-            margin="dense"
-            value={item}
-            onChange={(e) => setItem(e.target.value)}
-          />
+        <div className={classes.CardWrap}>
+          <div className={`${classes.Card} ${classes.PaddingField}`}>
+            <TextField
+              className={classes.InputField}
+              id="datetime-local"
+              label="日期與時間"
+              type="datetime-local"
+              defaultValue={selectedDate}
+              onChange={(e) => handleDateChange(e.target.value)}
+            />
+          </div>
         </div>
 
-        <div className="Card">
-          <Input
-            id="grams"
-            type="number"
-            margin="dense"
-            value={grams}
-            onChange={(e) => setGrams(e.target.value)}
-            endAdornment={<InputAdornment position="end">公克</InputAdornment>}
-          />
+        <div className={classes.CardWrap}>
+          <div className={`${classes.Card} ${classes.PaddingField}`}>
+            <TextField
+              className={classes.InputField}
+              id="item"
+              label="品項："
+              margin="dense"
+              value={item}
+              onChange={(e) => setItem(e.target.value)}
+            />
+          </div>
         </div>
 
-        <div className="Submit">
+        <div className={classes.CardWrap}>
+          <div className={`${classes.Card} ${classes.PaddingField}`}>
+            <Input
+              className={classes.InputField}
+              id="grams"
+              type="number"
+              margin="dense"
+              value={grams}
+              onChange={(e) => setGrams(e.target.value)}
+              endAdornment={
+                <InputAdornment position="end">公克</InputAdornment>
+              }
+            />
+          </div>
+        </div>
+
+        <div className={classes.CardWrap}>
           <ColorButton size="large" variant="contained" onClick={sendRequest}>
             輸入
           </ColorButton>

@@ -1,14 +1,47 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React from "react";
 import Container from "@material-ui/core/Container";
 import { useLocation } from "react-router-dom";
-import { useHistory } from "react-router-dom";
-import Button from "@material-ui/core/Button";
+import { makeStyles } from "@material-ui/core/styles";
+import background from "./background.png";
+const useStyles = makeStyles({
+  background: {
+    backgroundImage: `url(${background})`,
+    "background-repeat": "no-repeat",
+    "background-size": "cover",
+    height: "100vh",
+    "padding-top": "20px",
+  },
+  UserInfo: {
+    paddingLeft: 10,
+    border: "5px rgb(229, 141, 145) solid",
+    "border-radius": "10px",
+    background: "rgb(255, 255, 255, 0)",
+    width: "35%",
+    "font-size": "20px",
+  },
+  Card: {
+    display: "inline-grid",
+    border: "5px rgb(229, 141, 145) dashed",
+    "border-radius": "10px",
+    background: "rgb(253,247,234, 0.3)",
+    "font-size": "24px",
+    width: "90%",
+    paddingLeft: "5%",
+    paddingRight: "5%",
+    textAlign: "center",
+  },
+  CardWrap: {
+    display: "flex",
+    "justify-content": "center",
+    marginTop: 20,
+  },
+});
 
 const DetailPage = () => {
+  const classes = useStyles();
   const useQuery = () => {
     return new URLSearchParams(useLocation().search);
   };
-  const history = useHistory();
   const [user, id] = [useQuery().get("user"), useQuery().get("id")];
   const DetailHistory = () => {
     const list = [];
@@ -20,29 +53,31 @@ const DetailPage = () => {
         const displayWord = item[itemValue] >= 0 ? "克" : "毫升";
         const displayIcon = item[itemValue] >= 0 ? "+" : "-";
         list.push(
-          <div className="UserInfo">
-            <p>時間: {time}</p>
-            <p>項目: {itemValue}</p>
-            <p>
-              重量: {displayIcon}
-              {weidhtValue}
-              {displayWord}
-            </p>
+          <div className={classes.CardWrap}>
+            <div className={classes.Card}>
+              <div>
+                <p>時間: {time}</p>
+                <p>項目: {itemValue}</p>
+                <p>
+                  重量: {displayIcon}
+                  {weidhtValue}
+                  {displayWord}
+                </p>
+              </div>
+            </div>
           </div>
         );
       }
     }
     // return <div></div>;
-    return <div className="UserHistory">{list}</div>;
+    return <div>{list}</div>;
   };
 
   return (
-    <Container maxWidth="sm" className="menu_container">
-      <div className="MenuHeader">
-        <div className="HistoryUserInfo">
-          <p>姓名 : {user}</p>
-          <p>病例號: {id}</p>
-        </div>
+    <Container maxWidth="sm" className={classes.background}>
+      <div className={classes.UserInfo}>
+        <p>姓名 : {user}</p>
+        <p>病例號: {id}</p>
       </div>
       <DetailHistory />
     </Container>

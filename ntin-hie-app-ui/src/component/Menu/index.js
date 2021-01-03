@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import Container from "@material-ui/core/Container";
 import { useLocation } from "react-router-dom";
 import water from "./water.png";
@@ -6,10 +6,9 @@ import food from "./food.png";
 import pee from "./pee.png";
 import shit from "./shit.png";
 import userWeightPic from "./userWeight.png";
+import background from "./background.png";
 import Button from "@material-ui/core/Button";
-import "./index.css";
-import { withStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 
 const ColorButton = withStyles((theme) => ({
@@ -25,29 +24,65 @@ const ColorButton = withStyles((theme) => ({
   },
 }))(Button);
 
+const useStyles = makeStyles({
+  MenuHeader: {
+    display: "flex",
+    "justify-content": "space-around",
+  },
+  UserInfo: {
+    marginTop: 10,
+    paddingLeft: 10,
+    border: "2px #8dc7f0 solid",
+    "border-radius": "10px",
+    background: "rgb(255, 255, 255, 1)",
+    height: "50%",
+    width: "67%",
+    "font-size": "20px",
+  },
+  InputField: {
+    display: "flex",
+    "justify-content": "space-around",
+    border: "2px #8dc7f0 solid",
+    "border-radius": "10px",
+    background: "rgb(255, 255, 255, 0)",
+  },
+  IO: {
+    "font-size": "32px",
+    "margin-top": "5px",
+    "margin-bottom": "5px",
+  },
+  submit: {
+    "margin-top": "18px",
+  },
+  background: {
+    backgroundImage: `url(${background})`,
+    "background-repeat": "no-repeat",
+    "background-size": "cover",
+    height: "100vh",
+    "padding-top": "20px",
+  },
+  logoWord: {
+    "margin-top": "5px",
+    "margin-bottom": "5px",
+    "font-size": "20px",
+  },
+});
+
 const Menu = () => {
   const useQuery = () => {
-    console.log(useLocation());
     return new URLSearchParams(useLocation().search);
   };
-  const history = useHistory();
   const [user, id] = [useQuery().get("user"), useQuery().get("id")];
+  const history = useHistory();
 
-  const [userWeight, setUserWeight] = useState(
-    localStorage.getItem("userWeight") || ""
-  );
-  const updateWeight = (event) => {
-    localStorage.setItem("userWeight", event.target.value);
-    setUserWeight(event.target.value);
-  };
-
+  const classes = useStyles();
   return (
     <Fragment>
-      <Container maxWidth="sm" className="menu_container">
-        <div className="MenuHeader">
-          <div className="UserInfo">
-            <p>姓名 {user}</p>
-            <p>病例號: {id}</p>
+      <Container maxWidth="sm" className={classes.background}>
+        <div className={classes.MenuHeader}>
+          <div className={classes.UserInfo}>
+            <p>姓名 : {user}</p>
+            <p>病例號 : {id}</p>
           </div>
           <LogoAndText
             src={userWeightPic}
@@ -58,8 +93,8 @@ const Menu = () => {
           />
         </div>
 
-        <p className="IO">攝入</p>
-        <div className="InputField">
+        <p className={classes.IO}>攝入</p>
+        <div className={classes.InputField}>
           <LogoAndText
             className="FirstIcon"
             src={water}
@@ -77,8 +112,8 @@ const Menu = () => {
           />
         </div>
 
-        <p className="IO">攝出</p>
-        <div className="InputField">
+        <p className={classes.IO}>攝出</p>
+        <div className={classes.InputField}>
           <LogoAndText
             className="FirstIcon"
             src={pee}
@@ -95,7 +130,7 @@ const Menu = () => {
             }}
           />
         </div>
-        <div>
+        <div className={classes.submit}>
           <ColorButton
             variant="contained"
             color="primary"
@@ -112,13 +147,13 @@ const Menu = () => {
 };
 
 const LogoAndText = (props) => {
-  const { src, text, className, onClick } = props;
-
+  const { src, text, onClick } = props;
+  const classes = useStyles();
   return (
     <Button onClick={onClick}>
-      <div className={className}>
-        <img className="Logo" src={src} />
-        <p>{text}</p>
+      <div>
+        <img src={src} alt="img" />
+        <p className={classes.logoWord}>{text}</p>
       </div>
     </Button>
   );

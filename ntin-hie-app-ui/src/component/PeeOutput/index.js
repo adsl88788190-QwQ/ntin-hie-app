@@ -1,20 +1,18 @@
 import moment from "moment";
 import React, { Fragment, useState } from "react";
-import water from "./water.png";
 import pee from "./pee.png";
+import background from "./background.png";
 import { useHistory } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 
-import "./index.css";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import { BrowserRouter as Router, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 const ColorButton = withStyles((theme) => ({
   root: {
-    // margin: "0 auto",
     fontSize: 18,
     "font-weight": "bold",
     color: "#000000",
@@ -24,6 +22,52 @@ const ColorButton = withStyles((theme) => ({
     },
   },
 }))(Button);
+
+const useStyles = makeStyles({
+  background: {
+    backgroundImage: `url(${background})`,
+    "background-repeat": "no-repeat",
+    "background-size": "cover",
+    height: "100vh",
+    "padding-top": "20px",
+  },
+  InputHeader: {
+    display: "flex",
+    "justify-content": "center",
+    "font-size": "42px",
+  },
+  InputLogo: {
+    width: "120px",
+    height: "110px",
+  },
+  InputWord: {
+    "margin-top": "30px",
+    "margin-left": "10px",
+  },
+  Card: {
+    border: "5px hsl(30, 100%, 50%) solid",
+    "border-radius": "10px",
+    background: "rgb(255, 174, 87, 0.3)",
+    "font-size": "24px",
+    width: "90%",
+    paddingLeft: "5%",
+    paddingRight: "5%",
+  },
+  CardWrap: {
+    display: "flex",
+    "justify-content": "center",
+    marginTop: 20,
+  },
+  PaddingField: {
+    display: "flex",
+    justifyContent: "center",
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
+  InputField: {
+    width: "90%",
+  },
+});
 
 const useQuery = () => {
   console.log(useLocation());
@@ -37,14 +81,14 @@ const InputUI = () => {
   const [user, id] = [useQuery().get("user"), useQuery().get("id")];
   const history = useHistory();
   const InputReady = () => {
-    if (grams == "") {
-      alert("毫升沒有填");
+    if (grams === "") {
+      alert("重量沒有填");
       return false;
     }
     return true;
   };
   const sendRequest = () => {
-    if (!InputReady) {
+    if (!InputReady()) {
       return;
     }
     fetch("/userData", {
@@ -63,41 +107,53 @@ const InputUI = () => {
       history.push(`/Menu?user=${user}&id=${id}`);
     });
   };
+
+  const classes = useStyles();
   return (
     <Fragment>
-      <Container maxWidth="sm" className="container">
-        <div className="Header">
-          <img className="Logo" src={pee} />
-          <p>輸入排尿</p>
+      <Container maxWidth="sm" className={classes.background}>
+        <div className={classes.InputHeader}>
+          <img className={classes.InputLogo} src={pee} alt="pee" />
+          <p className={classes.InputWord}>輸入排尿</p>
         </div>
 
-        <div className="Card">
-          <p>姓名 {user}</p>
-          <p>病例號: {id}</p>
+        <div className={classes.CardWrap}>
+          <div className={classes.Card}>
+            <p> 姓名 :{user}</p>
+            <p> 病例號: {id}</p>
+          </div>
         </div>
 
-        <div className="Card">
-          <TextField
-            id="datetime-local"
-            label="日期與時間"
-            type="datetime-local"
-            defaultValue={selectedDate}
-            onChange={(e) => handleDateChange(e.target.value)}
-          />
+        <div className={classes.CardWrap}>
+          <div className={`${classes.Card} ${classes.PaddingField}`}>
+            <TextField
+              className={classes.InputField}
+              id="datetime-local"
+              label="日期與時間"
+              type="datetime-local"
+              defaultValue={selectedDate}
+              onChange={(e) => handleDateChange(e.target.value)}
+            />
+          </div>
         </div>
 
-        <div className="Card">
-          <Input
-            id="grams"
-            type="number"
-            margin="dense"
-            value={grams}
-            onChange={(e) => setGrams(e.target.value)}
-            endAdornment={<InputAdornment position="end">毫升</InputAdornment>}
-          />
+        <div className={classes.CardWrap}>
+          <div className={`${classes.Card} ${classes.PaddingField}`}>
+            <Input
+              className={classes.InputField}
+              id="grams"
+              type="number"
+              margin="dense"
+              value={grams}
+              onChange={(e) => setGrams(e.target.value)}
+              endAdornment={
+                <InputAdornment position="end">毫升</InputAdornment>
+              }
+            />
+          </div>
         </div>
 
-        <div className="Submit">
+        <div className={classes.CardWrap}>
           <ColorButton size="large" variant="contained" onClick={sendRequest}>
             輸入
           </ColorButton>
